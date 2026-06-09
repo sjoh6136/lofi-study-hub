@@ -24,7 +24,11 @@ const state = {
     },
     activeStation: 'lofigirl',
     musicAudio: null,
-    isPlaying: false
+    isPlaying: false,
+    
+    // Stretch Reminder
+    cumulativeWorkTime: 0,
+    stretchThreshold: 50 * 60 // 50 minutes in seconds
 };
 
 // --- Initialization ---
@@ -307,6 +311,17 @@ function playChimeSound() {
         const o = ctx.createOscillator(); const g = ctx.createGain();
         o.connect(g); g.connect(ctx.destination);
         o.frequency.setValueAtTime(f, t); g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.1, t + 0.05); g.gain.exponentialRampToValueAtTime(0.001, t + 1);
+        o.start(t); o.stop(t + 1);
+    };
+    [523.25, 659.25, 783.99].forEach((f, i) => chime(f, ctx.currentTime + i * 0.15));
+}
+05); g.gain.exponentialRampToValueAtTime(0.001, t + 1);
+        o.start(t); o.stop(t + 1);
+    };
+    [523.25, 659.25, 783.99].forEach((f, i) => chime(f, ctx.currentTime + i * 0.15));
+}
+t); g.gain.setValueAtTime(0, t);
         g.gain.linearRampToValueAtTime(0.1, t + 0.05); g.gain.exponentialRampToValueAtTime(0.001, t + 1);
         o.start(t); o.stop(t + 1);
     };
